@@ -1,0 +1,47 @@
+# sites.yaml - 爬虫规则库
+
+# 模板一：笔趣阁类通用规则 (示例)
+- name: "Biquge_General"
+  domains: 
+    - "www.biquge.com"
+    - "www.xbiquge.la"
+  encoding: "utf-8"  # 强制编码，有些网站是 gbk
+  rules:
+    # 目录页规则
+    chapter_list: "div#list dd a"
+    chapter_link_attr: "href"
+    # 内容页规则
+    chapter_title: "h1::text"
+    chapter_content: "div#content::text"
+    # 翻页/下一章 (留作后续扩展)
+    next_page: ""
+
+# 模板二：你的目标网站 (请修改为你刚才测试成功的规则)
+- name: "My_Target_Site"
+  domains:
+    - "www.example.com"  # 替换为你刚才爬的网站域名
+  encoding: "auto"       # auto 表示自动检测
+  rules:
+    chapter_list: "div.book-list a"  # 替换为你测试成功的
+    chapter_link_attr: "href"
+    chapter_title: "h1::text"
+    chapter_content: "div#txt::text"
+
+# 默念文学
+- name: "默念文学"
+  domains: ["www.mnwx.cc"]
+  encoding: "gb18030"
+  rules:
+    # 新增：小说元数据提取规则
+    novel_title: "h1.title::text"
+    novel_author: "table#at th:contains('文章作者') + td::text"
+    novel_category: "table#at th:contains('文章类别') + td a::text"
+    novel_status: "table#at th:contains('文章状态') + td::text"
+    novel_last_update: "table#at th:contains('最后更新') + td::text"
+    toc_link: "p.btnlinks a.read::attr(href)"
+
+    # 原有的章节规则
+    chapter_list: "td.L a"  # 替换为你测试成功的
+    chapter_link_attr: "href"
+    chapter_title: "div.bdsub h1::text"
+    chapter_content: "#contents::text"
